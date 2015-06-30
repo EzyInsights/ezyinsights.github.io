@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<h1 id="endpoints">Endpoints</h1>
+<h2 id="get-stories">GET /stories</h2>
+<p>Get all stories from EzyRealtime.</p>
+<p>The results can be filtered with these parameters:</p>
+<h3 id="parameters">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>datefrom</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">Specifies the beginning <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> of the results.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>dateto</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">Specifies the ending <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> of the results.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>country</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters results to the specified countries. Country codes follow the <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> standard. Specify multiple values by separating each value with a comma. e.g <code>US,GB,SE,FI</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>categories</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters results to the specified categories. Valid values are: <code>NEW</code> (General News), <code>VIR</code> (Viral News), <code>TAB</code> (Tabloids), <code>BUS</code> (Business News), <code>SPO</code> (Sport), <code>RAD</code> (Radio Stations), <code>MAG</code> (Magazines), <code>LIF</code> (Lifestyle), <code>ENT</code> (Entertainment), <code>TEC</code> (Technology), <code>FOO</code> (Food) <code>TEL</code> (Television), <code>CLA</code> (Classifieds) <code>TRA</code> (Travel) and <code>EME</code> (Emergency Services). Specify multiple values by separating each value with a comma e.g. <code>NEW,VIR,SPO</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>languages</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters results to the specified languages. Language codes follow the <a href="https://en.wikipedia.org/wiki/ISO_639">ISO 639-1 alpha-2</a> standard. Specify multiple values by separating each value with a comma. e.g. <code>en,sv,fi</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>content</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters contents to the specified content type. Valid values are <code>link</code>,<code>video</code> and <code>photo</code>. Specify multiple values by separating each value with a comma e.g. <code>link,video</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>itemtype</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters contents to the specified item type. Valid values are <code>NOTPOSTED</code>, <code>UNPOSTED</code> and <code>ALL</code>. Only one item type value can be specified.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>order</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Determines the order that the results are returned. Valid values are <code>SPEED</code>, <code>ENGAGEMENT</code> and <code>TIME</code>. Only one order value can be specified.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>threshold</code></td>
+<td align="left"><code>double</code></td>
+<td align="left">Speed threshold that each item must meet to be included.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>ignore</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters results to ignore stories sourced from specific publishers. Specify multiple values by separating each value with a comma.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>onlyshow</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Filters results to only return the stories sourced from specific publishers. Specify multiple values by separating each value with a comma.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>limit</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The number of stories to return.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>offset</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">Where to start from. Used if paging is required.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>normalise</code></td>
+<td align="left"><code>boolean</code></td>
+<td align="left">Normalises story ranking by taking into account the engagement received against the source's fan base.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="results">Results</h3>
+<p>The results are returned in <strong>JSON</strong>. Each value returned is described in the sections below.</p>
+<h3 id="example-request">Example Request</h3>
+<pre><code>$ curl https://realtime.ezyinsights.com
+    /api/v1.0/stories
+    ?datefrom=12312312
+    &amp;dateto=134123121
+    &amp;countries=SE,FI
+    &amp;order=SPEED</code></pre>
+<h3 id="example-response">Example Response</h3>
+<pre><code>[
+  &quot;story_id&quot;: &quot;awrs3a&quot;,
+  &quot;canonical_url&quot;: &quot;https://example.com/link_name_of_the_story.html&quot;,
+  &quot;headline&quot;: &quot;The Sensational Headline of this Story!&quot;,
+  &quot;picture_url&quot;: &quot;https://example.com/image.png&quot;,
+  &quot;description&quot;: &quot;A paragraph about this story. Sometimes more than one sentence.&quot;,
+  &quot;published_date&quot;: 1231213121,
+  &quot;endorsed_date&quot;: 1231213121,
+  &quot;as_at&quot;: 1212313111,
+  &quot;media_type&quot;: &quot;link,video&quot;,
+  &quot;engagement&quot;: 123115,
+  &quot;publisher_source&quot;: {
+    &quot;country&quot;: &quot;SE&quot;,
+    &quot;category&quot;: &quot;NEW&quot;,
+    &quot;language&quot;: &quot;sv&quot;,
+    &quot;logo_url&quot;: &quot;https://example.com/image.png&quot;
+  },
+  &quot;social_media_posts&quot;: {
+    &quot;total&quot;: 10,
+    &quot;facebook&quot;: 3,
+    &quot;twitter&quot;: 7
+  },
+  &quot;extended_engagement&quot;: {
+    &quot;total&quot;: 1214311,
+    &quot;facebook&quot;: 12214,
+    &quot;twitter&quot;: 212,
+    &quot;linkedin&quot;: 24,
+  }
+  &quot;cumulative_speed&quot;: {
+    &quot;last_hour&quot;: 121.456573,
+    &quot;lifetime&quot;: 34.225114
+  }
+],
+...</code></pre>
+<h4 id="publisher-source">Publisher Source</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>country</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The country code of the publisher source in <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">ISO 3166-1 alpha-2</a> format.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>category</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The category of this publisher source (see the parameter 'categories' for a list of valid category values).</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>language</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The language code of the publisher source in <a href="https://en.wikipedia.org/wiki/ISO_639">ISO 639-1 alpha-2</a> format.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>logo url</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The URL to the logo image file associated with this publisher.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="story">Story</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>story_id</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The unique identifier for this story. This id is used to access additional results from other API endpoints.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>canonical_url</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Canonical_link_element">canonical</a> URL of the story.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>headline</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Short text indicating the <a href="https://en.wikipedia.org/wiki/Headline">nature of the contents</a> of this story.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>picture_url</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The URL to the image file associated with this story.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>description</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">A short paragraph indicating the jist of the story.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>published_date</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> of when the story was published to the website.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>endorsed_date</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> of the most recent action that occured to this story. For example, it may be the published time of the story or when the most recent post to social media was made about this story. This is the date that is used by the <code>datefrom</code> and <code>dateto</code> parameters.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>as_at</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> indicating when the call to this endpoint was made.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>media_type</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">Specifys the type of story i.e. if the story is a <code>link</code>, <code>photo</code> or <code>video</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>engagement</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">All engagement received on this story so far from all social media channels.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="social-media-posts">Social Media Posts</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>total</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The total number of social media posts made by publishers about this story on all social media channels.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>facebook</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The number of social media posts made by publishers about this story on Facebook.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>linkedin</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The number of social media posts made by publishers about this story on LinkedIn.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>pinterst</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The number of social media posts made by publishers about this story on Pinterest.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>twitter</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The number of social media posts made by publishers about this story on Twitter.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="extended-engagement">Extended Engagement</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>total</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">The total amount of extended engagement received by this story on all social media channels.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>facebook</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">All extended engagement received by this story on Facebook.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>linkedin</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">All extended engagement received by this story on LinkedIn.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>pinterst</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">All extended engagement received by this story on Pinterest.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>twiter</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">All extended engagement received by this story on Twitter.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="cumulative-speed">Cumulative Speed</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>last_hour</code></td>
+<td align="left"><code>double</code></td>
+<td align="left">The engagements per minute of this story within the last hour.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>lifetime</code></td>
+<td align="left"><code>double</code></td>
+<td align="left">The engagements per minute of this story over it's whole lifetime.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="get-socialmediaposts">GET /socialmediaposts</h2>
+<p>Get the social media posts made for a story.</p>
+<h3 id="parameters-1">Parameters</h3>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>storyid</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The unique identifier for a story (obtained from the stories endpoint).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="results-1">Results</h3>
+<p>The results are returned in <strong>JSON</strong>. Each value returned is described in the sections below.</p>
+<h3 id="example-request-1">Example Request</h3>
+<pre><code>$ curl https://realtime.ezyinsights.com
+    /api/v1.0/socialmediaposts
+    ?storyid=asdas3f</code></pre>
+<h3 id="example-response-1">Example Response</h3>
+<pre><code>  {
+    &quot;as_at&quot;: 1212313111,
+    &quot;facebook_posts&quot;: [
+      {
+        &quot;story_id&quot;: &quot;awrs3a&quot;,
+        &quot;post_id&quot;: &quot;123456789_1234567&quot;,
+        &quot;post_date&quot;: 1231213121,
+        &quot;caption&quot;: &quot;What the person who made this post says about it&quot;,
+        &quot;likes&quot;: 134,
+        &quot;shares&quot;: 23,
+        &quot;comments&quot;: 54,
+        &quot;speed&quot;: {
+          &quot;last_hour&quot;: 121.456573,
+          &quot;lifetime&quot;: 34.225114
+        },
+        ...
+    ]
+  }</code></pre>
+<h4 id="social-media-posts-1">Social Media Posts</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>as_at</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> indicating when the call to this endpoint was made.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="facebook-posts">Facebook Posts</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>storyid</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The story id that this post is made about.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>post_id</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The Facebook post id for this post.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>post_date</code></td>
+<td align="left"><code>long</code></td>
+<td align="left">The <a href="https://en.wikipedia.org/wiki/Unix_time">Unix Timestamp</a> of when the post was made on Facebook.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>caption</code></td>
+<td align="left"><code>string</code></td>
+<td align="left">The caption of this Facebook post.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>likes</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">How many likes this post has received until now.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>shares</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">How many shares this post has received until now.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>comments</code></td>
+<td align="left"><code>integer</code></td>
+<td align="left">How many comments this post has received until now.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="speed">Speed</h4>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Name</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>last_hour</code></td>
+<td align="left"><code>double</code></td>
+<td align="left">The engagements per minute of this social media post within the last hour.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>lifetime</code></td>
+<td align="left"><code>double</code></td>
+<td align="left">The engagements per minute of this social media post over it's whole lifetime.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
