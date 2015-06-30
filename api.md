@@ -12,8 +12,6 @@ The results can be filtered with these parameters:
 
 ### Parameters
 
-Name | Type | Description
------------- | ------------- | ------------
 `datefrom` | `long` | Specifies the beginning [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) of the results.
 `dateto` | `long` | Specifies the ending [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) of the results.
 `country` | `string` | Filters results to the specified countries. Country codes follow the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) standard. Specify multiple values by separating each value with a comma. e.g `US,GB,SE,FI`
@@ -31,6 +29,51 @@ Name | Type | Description
 
 ### Results
 The results are returned in **JSON**. Each value returned is described in the sections below.
+
+### Example Request
+
+    $ curl https://realtime.ezyinsights.com
+        /api/v1.0/stories
+        ?datefrom=12312312
+        &dateto=134123121
+        &countries=SE,FI
+        &order=SPEED
+
+### Example Response
+    [
+      "story_id": "awrs3a",
+      "canonical_url": "https://example.com/link_name_of_the_story.html",
+      "headline": "The Sensational Headline of this Story!",
+      "picture_url": "https://example.com/image.png",
+      "description": "A paragraph about this story. Sometimes more than one sentence.",
+      "published_date": 1231213121,
+      "endorsed_date": 1231213121,
+      "as_at": 1212313111,
+      "media_type": "link,video",
+      "engagement": 123115,
+      "publisher_source": {
+        "country": "SE",
+        "category": "NEW",
+        "language": "sv",
+        "logo_url": "https://example.com/image.png"
+      },
+      "social_media_posts": {
+        "total": 10,
+        "facebook": 3,
+        "twitter": 7
+      },
+      "extended_engagement": {
+        "total": 1214311,
+        "facebook": 12214,
+        "twitter": 212,
+        "linkedin": 24,
+      }
+      "cumulative_speed": {
+        "last_hour": 121.456573,
+        "lifetime": 34.225114
+      }
+    ],
+    ...
 
 #### Publisher Source
 Name | Type | Description
@@ -79,53 +122,6 @@ Name | Type | Description
 `lifetime` | `double` | The engagements per minute of this story over it's whole lifetime.
 
 
-### Example Request
-
-    $ curl https://realtime.ezyinsights.com
-        /api/v1.0/stories
-        ?datefrom=12312312
-        &dateto=134123121
-        &countries=SE,FI
-        &order=SPEED
-
-### Example Response
-    [
-      "story_id": "awrs3a",
-      "canonical_url": "https://example.com/link_name_of_the_story.html",
-      "headline": "The Sensational Headline of this Story!",
-      "picture_url": "https://example.com/image.png",
-      "description": "A paragraph about this story. Sometimes more than one sentence.",
-      "published_date": 1231213121,
-      "endorsed_date": 1231213121,
-      "as_at": 1212313111,
-      "media_type": "link,video",
-      "engagement": 123115,
-      "publisher_source": {
-        "country": "SE",
-        "category": "NEW",
-        "language": "sv",
-        "logo_url": "https://example.com/image.png"
-      },
-      "social_media_posts": {
-        "total": 10,
-        "facebook": 3,
-        "twitter": 7
-      },
-      "extended_engagement": {
-        "total": 1214311,
-        "facebook": 12214,
-        "twitter": 212,
-        "linkedin": 24,
-      }
-      "cumulative_speed": {
-        "last_hour": 121.456573,
-        "lifetime": 34.225114
-      }
-    ],
-    ...
-
-
-
 GET /socialmediaposts
 ---------------------
 
@@ -139,29 +135,6 @@ Name | Type | Description
 
 ### Results
 The results are returned in **JSON**. Each value returned is described in the sections below.
-
-#### Social Media Posts
-Name | Type | Description
----- | ---- | -----------
-`as_at` | `long` |  The [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) indicating when the call to this endpoint was made.
-
-
-#### Facebook Posts
-Name | Type | Description
----- | ---- | -----------
-`storyid` | `string` | The story id that this post is made about.
-`post_id` | `string` | The Facebook post id for this post.
-`post_date` | `long` | The [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) of when the post was made on Facebook.
-`caption` | `string` | The caption of this Facebook post.
-`likes` | `integer` | How many likes this post has received until now.
-`shares` | `integer` | How many shares this post has received until now.
-`comments` | `integer` | How many comments this post has received until now.
-
-#### Speed
-Name | Type | Description
----- | ---- | -----------
-`last_hour` | `double` | The engagements per minute of this social media post within the last hour.
-`lifetime` | `double` | The engagements per minute of this social media post over it's whole lifetime.
 
 ### Example Request
 
@@ -188,3 +161,26 @@ Name | Type | Description
             ...
         ]
       }
+
+#### Social Media Posts
+Name | Type | Description
+---- | ---- | -----------
+`as_at` | `long` |  The [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) indicating when the call to this endpoint was made.
+
+
+#### Facebook Posts
+Name | Type | Description
+---- | ---- | -----------
+`storyid` | `string` | The story id that this post is made about.
+`post_id` | `string` | The Facebook post id for this post.
+`post_date` | `long` | The [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) of when the post was made on Facebook.
+`caption` | `string` | The caption of this Facebook post.
+`likes` | `integer` | How many likes this post has received until now.
+`shares` | `integer` | How many shares this post has received until now.
+`comments` | `integer` | How many comments this post has received until now.
+
+#### Speed
+Name | Type | Description
+---- | ---- | -----------
+`last_hour` | `double` | The engagements per minute of this social media post within the last hour.
+`lifetime` | `double` | The engagements per minute of this social media post over it's whole lifetime.
