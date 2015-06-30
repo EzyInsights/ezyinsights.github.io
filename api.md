@@ -12,7 +12,7 @@ The results can be filtered with these parameters:
 
 ### Parameters
 Name | Type | Description
----- | ---- | ----
+---- | ---- | -----
 `datefrom` | `long` | Specifies the beginning [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) of the results.
 `dateto` | `long` | Specifies the ending [Unix Timestamp](https://en.wikipedia.org/wiki/Unix_time) of the results.
 `country` | `string` | Filters results to the specified countries. Country codes follow the [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) standard. Specify multiple values by separating each value with a comma. e.g `US,GB,SE,FI`
